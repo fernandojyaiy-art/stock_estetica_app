@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Estética</title>
+</head>
+
+<body>
+ 
+ <h1>Stock de Cremas</h1>
+
+    <h2>Agregar nueva crema</h2>
+
+    <form action="/crear" method="post">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="text" name="descripcion" placeholder="Descripción">
+        <input type="number" name="cantidad" placeholder="Cantidad" required>
+        <input type="number" step="0.01" name="precio" placeholder="Precio" required>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+   {% if cremas %}
+    <ul>
+        {% for crema in cremas %}
+
+            <li>
+                <strong>{{ crema[1] }}</strong><br>
+                Stock: {{ crema[3] }}<br>
+                Precio: ${{ crema[4] }}
+                
+                !-- Botones para sumar, restar y eliminar --!
+
+                <form action="/sumar_stock" method="post" style="display:inline;">
+                    <input type="hidden" name="id" value="{{ crema[0] }}">
+                    <input type="number" name="cantidad" placeholder="+ stock" required>
+                    <button type="submit">Comprar</button>
+                </form>
+                
+                <form action="/restar_stock" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="{{ crema[0] }}">
+                <input type="number" name="cantidad" placeholder="- stock" required>
+                <button type="submit">Vender</button>
+                </form>
+            
+                <form action="/eliminar" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="{{ crema[0] }}">
+                <button type="submit" style="color:red;">Eliminar</button>
+                </form>
+            </li>
+
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay cremas cargadas.</p>
+{% endif %}
+</body>
+</html>
