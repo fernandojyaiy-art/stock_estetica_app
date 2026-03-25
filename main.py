@@ -45,7 +45,7 @@ def home(request: Request):
         }
     )
 
-#aca tenemos que generar la base de datos de las cremas, cantidades y precios de cada una. con una simple descripcion de la misma. mas un codigo de id.#
+#aca creamos una nueva crema con su nombre, descripcion, cantidad y precio. con una simple descripcion de la misma. mas un codigo de id.#
 @app.post("/crear")
 def crear_crema(
     nombre: str = Form(...),
@@ -57,7 +57,7 @@ def crear_crema(
 
     return RedirectResponse(url="/", status_code=303)
 
-#|aca tenemos que generar la base de datos de las cremas, cantidades y precios de cada una. con una simple descripcion de la misma. mas un codigo de id.#
+#|aca sumamos stock a una crema existente.
 @app.post("/sumar_stock")
 def sumar_stock(
     id: int = Form(...),
@@ -71,7 +71,7 @@ def sumar_stock(
 
     return RedirectResponse(url="/", status_code=303)
 
-#aca tenemos que generar la base de datos de las cremas, cantidades y precios de cada una. con una simple descripcion de la misma. mas un codigo de id.#
+#aca eliminamos por ventas o uso para tratamientos.
 @app.post("/eliminar")
 def eliminar(id: int = Form(...)):
     eliminar_crema(id)
