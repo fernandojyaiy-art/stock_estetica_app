@@ -21,14 +21,30 @@ def crear_base_de_datos():
     conn.close()
     
 # Función para obtener todas las cremas de la base de datos    
+
+from models import Crema
+
 def obtener_cremas():
     conn = sqlite3.connect('cremas.db')
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM cremas")
-    cremas = cursor.fetchall()
+    resultados = cursor.fetchall()
 
     conn.close()
+
+    # 🔥 conversión a objetos
+    cremas = []
+    for c in resultados:
+        crema = Crema(
+            id=c[0],
+            nombre=c[1],
+            descripcion=c[2],
+            cantidad=c[3],
+            precio=c[4]
+        )
+        cremas.append(crema)
+
     return cremas
 
 # Función para insertar una nueva crema en la base de datos

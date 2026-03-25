@@ -9,6 +9,7 @@ from data_base import insertar_crema
 from data_base import actualizar_stock
 from data_base import eliminar_crema
 from data_base import restar_stock
+from logic import evaluar_stock, productos_bajo_stock
 
 app = FastAPI()
 
@@ -55,6 +56,7 @@ def crear_crema(
     insertar_crema(nombre, descripcion, cantidad, precio)
 
     return RedirectResponse(url="/", status_code=303)
+
 #|aca tenemos que generar la base de datos de las cremas, cantidades y precios de cada una. con una simple descripcion de la misma. mas un codigo de id.#
 @app.post("/sumar_stock")
 def sumar_stock(
@@ -88,3 +90,21 @@ def restar_stock_endpoint(
     restar_stock(id, cantidad)
 
     return RedirectResponse(url="/", status_code=303)
+
+#aca evaluamos stock y mostramos mensajes de alerta. con una simple descripcion de la misma. mas un codigo de id.#
+@app.get("/")
+def home(request: Request):
+    cremas = obtener_cremas()
+
+    mensaje = evaluar_stock(cremas)
+    bajo_stock = productos_bajo_stock(cremas)
+
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "cremas": cremas,
+            "mensaje": mensaje,
+            "bajo_stock": bajo_stock
+        }
+    )
