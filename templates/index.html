@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Estética</title>
 </head>
 
 <body>
- 
- <h1>Stock de Cremas</h1>
+<a href="/ventas">📊 Ver ventas</a>
+
+<h1>Stock de Cremas</h1>
+
+<h2>🔎 Buscar producto</h2>
+
+<form method="get" action="/">
+    <input type="text" name="busqueda" placeholder="Buscar por nombre">
+    <button type="submit">Buscar</button>
+</form>
 
 <h2>Agregar nueva crema</h2>
 
-<form action="/agregar" method="post">
+<form action="/crear" method="post">
     <input type="text" name="nombre" placeholder="Nombre" required>
     <input type="text" name="descripcion" placeholder="Descripción">
     <input type="number" name="cantidad" placeholder="Cantidad" required>
+    <input type="number" name="precio_costo" placeholder="Costo" required>
     <input type="number" name="precio" placeholder="Precio" required>
     <button type="submit">Guardar</button>
 </form>
@@ -38,36 +46,49 @@
 <ul>
 {% for crema in cremas %}
     <li style="margin-bottom: 15px;">
-        
         <strong>{{ crema.nombre }}</strong><br>
         Stock: {{ crema.cantidad }}<br>
         Precio: ${{ crema.precio }}
 
         <br><br>
 
-        <!-- SUMAR -->
         <form action="/sumar_stock" method="post" style="display:inline;">
             <input type="hidden" name="id" value="{{ crema.id }}">
             <input type="number" name="cantidad" placeholder="+ stock" required>
             <button type="submit">➕</button>
         </form>
 
-        <!-- RESTAR -->
         <form action="/restar_stock" method="post" style="display:inline;">
             <input type="hidden" name="id" value="{{ crema.id }}">
             <input type="number" name="cantidad" placeholder="- stock" required>
             <button type="submit">➖</button>
         </form>
 
-        <!-- ELIMINAR -->
         <form action="/eliminar" method="post" style="display:inline;">
             <input type="hidden" name="id" value="{{ crema.id }}">
             <button type="submit">🗑</button>
         </form>
+       
+        <form action="/editar" method="post">
+            <input type="hidden" name="id" value="{{ crema.id }}">
+            <input type="text" name="descripcion" placeholder="Nueva descripción">
+            <input type="number" name="precio" placeholder="Nuevo precio" required>
+             <button type="submit">✏️ Editar</button>
+        </form>
+
+        <form action="/vender" method="post" style="display:inline;">
+            <input type="hidden" name="id" value="{{ crema.id }}">
+            <input type="number" name="cantidad" placeholder="vender" required>
+            <button type="submit">💸 Vender</button>
+        </form>
+
 
     </li>
 {% endfor %}
 </ul>
+
+<h2>💰 Valor total en stock: ${{ total }}</h2>
+<h2>💰 Ganancia total: ${{ ganancia }}</h2>
 
 </body>
 </html>

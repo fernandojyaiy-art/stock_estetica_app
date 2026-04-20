@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas</title>
+</head>
+<body>
+
+<h1>📊 Historial de ventas</h1>
+
+<a href="/">⬅ Volver</a>
+
+<ul>
+{% for venta in ventas %}
+    <li>
+        {{ venta[1] }} - Cantidad: {{ venta[2] }} - Fecha: {{ venta[3] }}
+    </li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
