@@ -10,13 +10,37 @@
 
 <a href="/">⬅ Volver</a>
 
-<ul>
-{% for venta in ventas %}
-    <li>
-        {{ venta[1] }} - Cantidad: {{ venta[2] }} - Fecha: {{ venta[3] }}
-    </li>
-{% endfor %}
-</ul>
+<hr>
+
+<h2>📈 Resumen</h2>
+<p>💰 Ganancia total: <b>${{ total_ganancia }}</b></p>
+<p>📦 Unidades vendidas: <b>{{ total_ventas }}</b></p>
+
+<hr>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Venta</th>
+        <th>Precio Costo</th>
+        <th>Ganancia</th>
+        <th>Fecha</th>
+    </tr>
+
+    {% for venta in ventas %}
+    <tr>
+        <td>{{ venta.id }}</td>
+        <td>{{ venta.crema_id }}</td>
+        <td>{{ venta.cantidad }}</td>
+        <td>${{ venta.precio_venta }}</td>
+        <td>${{ venta.precio_costo }}</td>
+        <td><b>${{ venta.ganancia }}</b></td>
+        <td>{{ venta.fecha }}</td>
+    </tr>
+    {% endfor %}
+</table>
 
 </body>
 </html>

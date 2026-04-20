@@ -9,6 +9,7 @@ from logic import calcular_valor_total
 from data_base import registrar_venta
 from data_base import obtener_ventas
 from data_base import calcular_ganancia_total
+from data_base import procesar_ventas_con_ganancia
 
 from data_base import (
     crear_base_de_datos,
@@ -139,12 +140,20 @@ def vender(
 
 @app.get("/ventas")
 def ver_ventas(request: Request):
-    ventas = obtener_ventas()
+
+    ventas_raw = obtener_ventas()
+    ventas = procesar_ventas_con_ganancia(ventas_raw)
+
+    total_ganancia = sum(v["ganancia"] for v in ventas)
+    total_ventas = sum(v["cantidad"] for v in ventas)
 
     return templates.TemplateResponse(
         "ventas.html",
         {
             "request": request,
-            "ventas": ventas
+            "ventas": ventas,
+            "total_ganancia": total_ganancia,
+            "total_ventas": total_ventas
         }
     )
+
