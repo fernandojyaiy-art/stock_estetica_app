@@ -6,6 +6,8 @@ def evaluar_stock(cremas):
     return None
 
 
-def productos_bajo_stock(cremas):
-  
-    return [c for c in cremas if c.cantidad <= 1]
+def productos_bajo_stock(cremas, limite=2):
+    return [c for c in cremas if c.cantidad <= limite]
+
+def calcular_valor_total(cremas):
+    return sum(c.precio * c.cantidad for c in cremas)
